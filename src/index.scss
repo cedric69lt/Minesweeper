@@ -5,17 +5,12 @@
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	user-select: none;
 }
 
 #root {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: 20px;
 	width: 100svw;
 	height: 100svh;
 	background: #598b8e;
 	overflow: hidden;
+	color: #fff;
 }

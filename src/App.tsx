@@ -21,6 +21,7 @@ import Help from './components/Help/Help';
 import Logo from './assets/logo';
 import './App.scss';
 import Question from './assets/question';
+import Home from './components/Home/Home';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const App = () => {
@@ -28,7 +29,7 @@ const App = () => {
 
 	return (
 		<div className='App'>
-			<RecoilRoot>
+			{/* <RecoilRoot>
 				<div className='stats'>
 					<Timer />
 					<Logo className={'logo'} />
@@ -49,7 +50,10 @@ const App = () => {
 						displayHelp(false);
 					}}
 				/>
-			)}
+			)} */}
+			<header className='App-header'>
+				<Home />
+			</header>
 		</div>
 	);
 };
