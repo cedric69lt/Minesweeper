@@ -1,0 +1,3 @@
+export type Difficulty = 'beginner' | 'intermediate' | 'expert';
+export type CellValue = 'empty' | 'bomb' | number;
+export type GridType = { hidden: boolean; value: CellValue; flag: boolean }[][];

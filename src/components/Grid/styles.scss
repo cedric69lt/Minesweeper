@@ -1,0 +1,76 @@
+.grid {
+	--size: 30px;
+	display: grid;
+	gap: 2px;
+	padding: 2px;
+	border-radius: 5px;
+	background-color: #ffff;
+	overflow: hidden;
+
+	& > .row {
+		display: grid;
+		gap: 2px;
+		height: var(--size);
+
+		& > .cell {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: var(--size);
+			border: none;
+			background-color: #f6f6f6;
+			font-weight: 700;
+			outline: none;
+
+			&.hidden {
+				background-color: #dedede;
+				cursor: pointer;
+			}
+
+			&.v1 {
+				color: blue;
+			}
+
+			&.v2 {
+				color: green;
+			}
+
+			&.v3 {
+				color: orange;
+			}
+
+			&.v4 {
+				color: red;
+			}
+
+			&.v5 {
+				color: purple;
+			}
+
+			& > img {
+				width: 70%;
+				height: 70%;
+				object-fit: cover;
+			}
+		}
+
+		&:first-child > .cell {
+			&:first-child {
+				border-top-left-radius: 5px;
+			}
+
+			&:last-child {
+				border-top-right-radius: 5px;
+			}
+		}
+		&:last-child > .cell {
+			&:first-child {
+				border-bottom-left-radius: 5px;
+			}
+
+			&:last-child {
+				border-bottom-right-radius: 5px;
+			}
+		}
+	}
+}
