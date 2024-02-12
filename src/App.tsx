@@ -22,6 +22,7 @@ import Logo from './assets/logo';
 import './App.scss';
 import Question from './assets/question';
 import Home from './components/Home/Home';
+import LeaderBoard from './components/Leaderboard/leaderboard';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const App = () => {
@@ -51,9 +52,8 @@ const App = () => {
 					}}
 				/>
 			)} */}
-			<header className='App-header'>
-				<Home />
-			</header>
+			<Home />
+			{/* <LeaderBoard /> */}
 		</div>
 	);
 };

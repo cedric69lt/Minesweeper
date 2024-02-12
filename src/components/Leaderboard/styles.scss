@@ -1,0 +1,72 @@
+.boardContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+    width: 100vw;
+}
+
+.titleBoard {
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+	font-weight: bold;
+}
+
+.completeBoard {
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	border: 2px solid #fff;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 400px;
+    
+}
+
+.containerLittle {
+    overflow: scroll;
+    height: 100%;
+    max-height: 350px;
+    gap: 1em;
+}
+
+.lineInfo {
+    display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+    border: 1.5px solid #fff;
+    border-radius: 3px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    font-weight: 400;
+}
+
+.infoDate {
+    margin-left: 10px;
+}
+
+.infoScore {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.lineBoard {
+    display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+    border: 1.5px solid #fff;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: #e1e1e1;
+    color: #333;
+    font-weight: 400;
+}
+
+.blockScore {
+    text-align: right;
+}
