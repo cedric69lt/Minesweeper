@@ -5,12 +5,16 @@ export const genGrid = (size: number): GridType => {
 	let grid: GridType = Array.apply(null, Array(size)).map(() => {
 		return Array.apply(null, Array(size)).map(() => {
 			return {
+				// hidden: false,
 				hidden: true,
 				value: 'empty',
 				flag: false,
 			};
 		});
 	});
+
+	// grid = genBombs(grid, 'beginner');
+	// grid = genNumbers(grid);
 
 	return grid;
 };
@@ -28,11 +32,11 @@ export const genBombs = (grid: GridType, difficulty: Difficulty) => {
 	}
 
 	bombs = Math.floor(bombs);
-
-	for (let i = 0; i <= bombs; i++) {
+	for (let i = 1; i <= bombs; i++) {
 		let needRegenerate = false;
 
 		do {
+			needRegenerate = false;
 			const row = getRandomArbitrary(0, grid.length);
 			const col = getRandomArbitrary(0, grid.length);
 			let bombsArounds = 0;
@@ -69,7 +73,7 @@ export const genBombs = (grid: GridType, difficulty: Difficulty) => {
 		} while (needRegenerate);
 	}
 
-	return grid;
+	return { grid: grid, bombsCount: bombs };
 };
 
 export const genNumbers = (grid: GridType): GridType => {
@@ -140,4 +144,33 @@ export const revealAllGrid = (grid: GridType, excludeGoodFlags: boolean = true) 
 			};
 		});
 	});
+};
+
+export const startGame = (grid: GridType, difficulty: Difficulty, needEmpty: boolean = true, rowIndex?: number, colIndex?: number): { grid: GridType; bombsCount: number } => {
+	if (needEmpty) {
+		if (rowIndex === undefined || rowIndex < 0 || rowIndex >= grid.length) {
+			throw Error('Missing rowIndex and/or colIndex parameters.');
+		} else if (colIndex === undefined || colIndex < 0 || colIndex >= grid[rowIndex].length) {
+			throw Error('Missing rowIndex and/or colIndex parameters.');
+		}
+
+		let bombsCount = 0;
+
+		do {
+			const { grid: bombsGrid, bombsCount: bombsCountFromGen } = genBombs(grid, difficulty as Difficulty);
+			grid = bombsGrid;
+
+			bombsCount = bombsCountFromGen;
+		} while (grid[rowIndex][colIndex].value !== 'empty');
+
+		grid = genNumbers(grid);
+		return { grid, bombsCount };
+	}
+
+	const { grid: bombsGrid, bombsCount } = genBombs(grid, difficulty);
+	grid = bombsGrid;
+
+	grid = genNumbers(grid);
+
+	return { grid, bombsCount };
 };

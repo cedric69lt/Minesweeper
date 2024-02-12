@@ -3,12 +3,17 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ React --------------------------------------------------------
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ----------------------------------------------------- Context -------------------------------------------------------
+import { useRecoilState } from 'recoil';
+import { gameStateAtom } from '../../contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ Utils --------------------------------------------------------
 import { Difficulty } from '../../types/game';
-import { discoverAroundCell, genBombs, genGrid, genNumbers } from '../../utils/game';
+import { discoverAroundCell, genGrid, startGame } from '../../utils/game';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Assets --------------------------------------------------------
@@ -18,8 +23,9 @@ import './styles.scss';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Grid = ({ size = 12, difficulty = 'beginner' }) => {
+	const [gameState, setGameState] = useRecoilState(gameStateAtom);
+
 	const [grid, setGrid] = useState(genGrid(size));
-	const [gameStatus, setGameStatus] = useState('idle');
 
 	const [, updateGrid] = useState({});
 	const forceUpdate = useCallback(() => updateGrid({}), []);
@@ -30,11 +36,15 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 
 		if (grid[rowIndex][colIndex].hidden && !grid[rowIndex][colIndex].flag) {
 			setGrid((prev) => {
-				if (gameStatus === 'idle') {
-					do {
-						prev = genNumbers(genBombs(prev, difficulty as Difficulty));
-					} while (prev[rowIndex][colIndex].value !== 'empty');
-					setGameStatus('started');
+				if (gameState.status === 'idle') {
+					const { grid: newGrid, bombsCount } = startGame(prev, difficulty as Difficulty, true, rowIndex, colIndex);
+					prev = newGrid;
+
+					setGameState((prevGameState) => ({
+						...prevGameState,
+						status: 'playing',
+						bombs: bombsCount,
+					}));
 				}
 
 				return discoverAroundCell(prev, rowIndex, colIndex);
@@ -48,10 +58,26 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 
 		if (grid[rowIndex][colIndex].hidden) {
 			setGrid((prev) => {
+				if (gameState.status === 'idle') {
+					const { grid: newGrid, bombsCount } = startGame(prev, difficulty as Difficulty, false);
+					prev = newGrid;
+
+					setGameState((prevGameState) => ({
+						...prevGameState,
+						status: 'playing',
+						bombs: bombsCount,
+					}));
+				}
+
 				return prev.map((row, idx) => {
 					if (idx === rowIndex) {
 						return row.map((col, idy) => {
 							if (idy === colIndex) {
+								setGameState((prevGameState) => ({
+									...prevGameState,
+									placedFlags: col.flag ? prevGameState.placedFlags - 1 : prevGameState.placedFlags + 1,
+								}));
+
 								return {
 									...col,
 									flag: !col.flag,
@@ -65,21 +91,6 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 			});
 		}
 	};
-
-	// --- Development
-	useEffect(() => {
-		if (process.env.NODE_ENV === 'development') {
-			document.addEventListener('keyup', (ev) => {
-				if (ev.key === 'v') {
-					setGrid(() => {
-						let newGrid = genGrid(size);
-
-						return genNumbers(genBombs(newGrid, difficulty as Difficulty));
-					});
-				}
-			});
-		}
-	}, [size, difficulty]);
 	// ---------------------------------------------------------------------------------------------------------------------
 
 	return (
