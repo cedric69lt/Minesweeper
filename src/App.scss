@@ -17,4 +17,25 @@
 			width: 75px;
 		}
 	}
+
+	& > .helpButton {
+		display: grid;
+		grid-template-columns: 20px 1fr;
+		align-items: center;
+		gap: 5px;
+		padding: 10px 15px;
+		border: 2px solid #f39440;
+		border-radius: 5px;
+		background-color: #ffdccb;
+		font-size: 0.9em;
+		font-weight: 600;
+		color: #f39440;
+		opacity: 0.7;
+		cursor: pointer;
+		transition: opacity 0.3s ease;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
 }

@@ -1,0 +1,62 @@
+.helpContainer {
+	z-index: 10;
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100svw;
+	height: 100svh;
+	background-color: rgba(0, 0, 0, 0.4);
+	backdrop-filter: blur(7px);
+
+	& > .helpPopup {
+		display: flex;
+		flex-direction: column;
+		width: 95svw;
+		max-width: 600px;
+		border-radius: 5px;
+		background-color: #ffeee5;
+		color: #f39440;
+
+		& > .header {
+			display: grid;
+			grid-template-columns: 1fr 30px;
+			gap: 30px;
+			padding: 15px;
+			border-bottom: 1px solid #f39440;
+			box-shadow: 0 0 3px #ffdccb;
+			clip-path: inset(0 0 -3px 0);
+
+			& > .title {
+				font-size: 1.5em;
+			}
+
+			& > .closeButton {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				padding: 2px;
+				border: none;
+				background-color: transparent;
+				cursor: pointer;
+
+				&:focus-visible {
+					outline-color: #f39440;
+				}
+
+				& > svg {
+					width: 100%;
+					color: #f39440;
+				}
+			}
+		}
+
+		& > .content {
+			display: flex;
+			flex-direction: column;
+			padding: 15px;
+			width: 100%;
+			line-height: 1.4em;
+		}
+	}
+}
