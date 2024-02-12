@@ -9,8 +9,14 @@ import './styles.scss';
 
 const Help = ({ onClose }: { onClose: () => void }) => {
 	return (
-		<div className='helpContainer'>
-			<div className='helpPopup'>
+		<div
+			className='helpContainer'
+			onClick={onClose}
+		>
+			<div
+				className='helpPopup'
+				onClick={(ev) => ev.stopPropagation()}
+			>
 				<div className='header'>
 					<p className='title'>Comment jouer ?</p>
 					<button
