@@ -1,47 +1,64 @@
 .gameContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-}
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: stretch;
+	gap: 30px;
+	width: 95svw;
+	max-width: 500px;
 
-.gameTitle {
-    font-size: 2rem;
-    font-weight: bold;
-}
+	& > .title {
+		font-size: 2em;
+		font-weight: 600;
+		text-align: center;
+		color: #ffffff;
+	}
 
-.settingsContainer {
-    display: grid;
-    grid-template-rows: repeat(2, 1fr);
-    margin: 1rem 0 1rem 0;
-    gap: 10px;
-}
+	& > .settingsContainer {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px;
+		border: 2px solid #f39440;
+		border-radius: 5px;
+		background-color: #ffdccb;
 
-.selectorBox {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
+		& > .selectorBox {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 20px;
 
-.chooseTitle{
-    font-size: 1.2rem;
-}
+			& > .settingLabel {
+				font-size: 1.2rem;
+				color: #f39440;
+			}
 
-.parameterBox {
-    font-size: 1rem;
-    border-radius: 5px;
-    padding: 2.5px 5px;
-}
+			& > .select {
+				padding: 2.5px 5px;
+				border: 1px solid #f39440;
+				border-radius: 5px;
+				background-color: #ffdccb;
+				font-size: 1rem;
+				color: #f39440;
+				outline: none;
+				cursor: pointer;
+			}
+		}
 
-.startGameBtn {
-    margin: 1rem 0 1rem 0;
-    padding: 0.7rem 1rem;
-    border-radius: 10px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    background-color: #333;
-    color: #FFF;
-    border: #FFF 0.5px solid;
-    cursor: pointer;
+		& > .startButton {
+			padding: 10px;
+			border: 2px solid #f39440;
+			border-radius: 5px;
+			background-color: #ffdccb;
+			font-size: 1.2em;
+			color: #f39440;
+			cursor: pointer;
+			transition: background-color 0.3s ease, color 0.3s ease;
+
+			&:hover {
+				background-color: #f39440;
+				color: #ffdccb;
+			}
+		}
+	}
 }

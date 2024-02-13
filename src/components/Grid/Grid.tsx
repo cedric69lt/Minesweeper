@@ -22,10 +22,10 @@ import Flag from '../../assets/flag.png';
 import './styles.scss';
 // ---------------------------------------------------------------------------------------------------------------------
 
-const Grid = ({ size = 12, difficulty = 'beginner' }) => {
+const Grid = () => {
 	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 
-	const [grid, setGrid] = useState(genGrid(size));
+	const [grid, setGrid] = useState(genGrid(gameState.gridSize));
 
 	const [, updateGrid] = useState({});
 	const forceUpdate = useCallback(() => updateGrid({}), []);
@@ -37,7 +37,7 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 		if (grid[rowIndex][colIndex].hidden && !grid[rowIndex][colIndex].flag) {
 			setGrid((prev) => {
 				if (gameState.status === 'idle') {
-					const { grid: newGrid, bombsCount } = startGame(prev, difficulty as Difficulty, true, rowIndex, colIndex);
+					const { grid: newGrid, bombsCount } = startGame(prev, gameState.difficulty as Difficulty, true, rowIndex, colIndex);
 					prev = newGrid;
 
 					setGameState((prevGameState) => ({
@@ -59,7 +59,7 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 		if (grid[rowIndex][colIndex].hidden) {
 			setGrid((prev) => {
 				if (gameState.status === 'idle') {
-					const { grid: newGrid, bombsCount } = startGame(prev, difficulty as Difficulty, false);
+					const { grid: newGrid, bombsCount } = startGame(prev, gameState.difficulty as Difficulty, false);
 					prev = newGrid;
 
 					setGameState((prevGameState) => ({
@@ -97,7 +97,7 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 		<div
 			className='grid'
 			style={{
-				gridTemplateRows: `repeat(${size}, var(--size))`,
+				gridTemplateRows: `repeat(${gameState.gridSize}, var(--size))`,
 			}}
 		>
 			{grid.map((row, rowIndex) => (
@@ -105,7 +105,7 @@ const Grid = ({ size = 12, difficulty = 'beginner' }) => {
 					key={`row${rowIndex}`}
 					className='row'
 					style={{
-						gridTemplateColumns: `repeat(${size}, var(--size))`,
+						gridTemplateColumns: `repeat(${gameState.gridSize}, var(--size))`,
 					}}
 				>
 					{row.map((cell, cellIndex) => {

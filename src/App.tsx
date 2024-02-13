@@ -7,7 +7,8 @@ import { useState } from 'react';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Context -------------------------------------------------------
-import { RecoilRoot } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { gameStateAtom } from './contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // --------------------------------------------------- Components ------------------------------------------------------
@@ -28,32 +29,36 @@ import LeaderBoard from './components/Leaderboard/leaderboard';
 const App = () => {
 	const [helpDisplayed, displayHelp] = useState(false);
 
+	const [gameState] = useRecoilState(gameStateAtom);
+
 	return (
 		<div className='App'>
-			{/* <RecoilRoot>
-				<div className='stats'>
-					<Timer />
-					<Logo className={'logo'} />
-					<MinesCounter />
-				</div>
-				<Grid />
-				<button
-					className='helpButton'
-					onClick={() => displayHelp(true)}
-				>
-					<Question />
-					<span>Comment jouer</span>
-				</button>
-			</RecoilRoot>
-			{helpDisplayed && (
-				<Help
-					onClose={() => {
-						displayHelp(false);
-					}}
-				/>
-			)} */}
-			<Home />
-			{/* <LeaderBoard /> */}
+			{gameState.status === 'settings' && <Home />}
+			{(gameState.status === 'idle' || gameState.status === 'playing') && (
+				<>
+					<div className='stats'>
+						<Timer />
+						<Logo className={'logo'} />
+						<MinesCounter />
+					</div>
+					<Grid />
+					<button
+						className='helpButton'
+						onClick={() => displayHelp(true)}
+					>
+						<Question />
+						<span>Comment jouer</span>
+					</button>
+					{helpDisplayed && (
+						<Help
+							onClose={() => {
+								displayHelp(false);
+							}}
+						/>
+					)}
+				</>
+			)}
+			{gameState.status === 'board' && <LeaderBoard />}
 		</div>
 	);
 };
