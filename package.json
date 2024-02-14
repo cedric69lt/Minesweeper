@@ -11,10 +11,12 @@
 		"eject": "react-scripts eject"
 	},
 	"dependencies": {
+		"@types/localforage": "^0.0.34",
 		"@types/node": "^20.11.16",
 		"@types/react": "^18.2.53",
 		"@types/react-dom": "^18.2.18",
 		"commitizen": "^4.3.0",
+		"localforage": "^1.10.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-scripts": "5.0.1",

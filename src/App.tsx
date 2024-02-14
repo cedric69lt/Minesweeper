@@ -12,18 +12,18 @@ import { gameStateAtom } from './contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // --------------------------------------------------- Components ------------------------------------------------------
-import Grid from './components/Grid/Grid';
+import Home from './components/Home/Home';
 import Timer from './components/Stats/Timer/Timer';
 import MinesCounter from './components/Stats/MinesCounter/MinesCounter';
+import Grid from './components/Grid/Grid';
 import Help from './components/Help/Help';
+import LeaderBoard from './components/Leaderboard/Leaderboard';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Styles --------------------------------------------------------
 import Logo from './assets/logo';
-import './App.scss';
 import Question from './assets/question';
-import Home from './components/Home/Home';
-import LeaderBoard from './components/Leaderboard/leaderboard';
+import './App.scss';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const App = () => {
