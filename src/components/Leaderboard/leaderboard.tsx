@@ -1,31 +1,53 @@
+// ---------------------------------------------------------------------------------------------------------------------
+//!                                                       Imports
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------ React --------------------------------------------------------
+import { useEffect, useState } from 'react';
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------ Recoil & Stockage --------------------------------------------------
+import localforage from 'localforage';
 import { useRecoilState } from 'recoil';
+import { gameStateAtom } from '../../contexts/gameState';
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------ Types --------------------------------------------------------
+import { LeaderBoardItem } from '../../types/game';
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ----------------------------------------------------- Assets --------------------------------------------------------
 import CalendarIcon from '../../assets/calendar';
 import Replay from '../../assets/replay';
 import Settings from '../../assets/settings';
 import TimerIcon from '../../assets/timer';
 import './styles.scss';
-import { gameStateAtom } from '../../contexts/gameState';
+// ---------------------------------------------------------------------------------------------------------------------
 
-const arrayBoard = [
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-	{ date: '12/06/2014', time: '1m 26s' },
-];
+const store = localforage.createInstance({
+	name: 'leaderboard',
+	driver: localforage.INDEXEDDB,
+	version: 1.0,
+	storeName: 'leaderboard',
+	description: 'Store 10 best game time',
+});
 
 const LeaderBoard = () => {
 	const [, setGameState] = useRecoilState(gameStateAtom);
+	const [data, setData] = useState<LeaderBoardItem[]>([]);
+
+	useEffect(() => {
+		const getData = async () => {
+			const storeData = await store.getItem<LeaderBoardItem[]>('leaderboard');
+			if (storeData) {
+				setData(storeData);
+			}
+		};
+
+		if (data.length === 0) {
+			getData();
+		}
+	}, []);
 
 	return (
 		<>
@@ -45,7 +67,7 @@ const LeaderBoard = () => {
 				</div>
 
 				<div className='scoresContainer'>
-					{arrayBoard.map((item, index) => {
+					{data.map((item, index) => {
 						return (
 							<div
 								className='score'

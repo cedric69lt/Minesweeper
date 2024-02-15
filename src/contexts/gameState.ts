@@ -5,7 +5,7 @@ export const gameStateAtom = atom({
 	default: {
 		status: 'board',
 		difficulty: 'begginer',
-		gridSize: 20,
+		gridSize: 12,
 		bombs: 0,
 		placedFlags: 0,
 	},
