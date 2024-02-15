@@ -31,6 +31,9 @@ export const genBombs = (grid: GridType, difficulty: Difficulty) => {
 		bombs = surface * 0.15;
 	}
 
+	console.log(difficulty);
+	// console.log(surface, surface * 0.05, bombs);
+
 	bombs = Math.floor(bombs);
 	for (let i = 1; i <= bombs; i++) {
 		let needRegenerate = false;
@@ -164,6 +167,7 @@ export const startGame = (grid: GridType, difficulty: Difficulty, needEmpty: boo
 		} while (grid[rowIndex][colIndex].value !== 'empty');
 
 		grid = genNumbers(grid);
+		// console.log(grid, bombsCount);
 		return { grid, bombsCount };
 	}
 

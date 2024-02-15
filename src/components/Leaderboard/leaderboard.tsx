@@ -93,7 +93,7 @@ const LeaderBoard = () => {
 
 				<button
 					className='controlButton replay'
-					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle' }))}
+					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle', endType: '', placedFlags: 0, bombs: 0, gameTime: 0 }))}
 				>
 					<Replay />
 					Rejouer

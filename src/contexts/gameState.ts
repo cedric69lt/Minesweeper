@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 /**
  * Values:
  * - Status: 'settings' | 'idle' | 'playing' | 'board'
- * - Difficulty: 'begginer' | 'intermediate' | 'expert'
+ * - Difficulty: 'beginner' | 'intermediate' | 'expert'
  * - Grid Size: 12, 16, 20
  * - Bombs: ]0;{GridSize}]
  * - Placed Flags: [0;{GridSize}]
@@ -15,7 +15,7 @@ export const gameStateAtom = atom({
 	key: 'gameState',
 	default: {
 		status: 'board',
-		difficulty: 'begginer',
+		difficulty: 'beginner',
 		gridSize: 12,
 		bombs: 0,
 		placedFlags: 0,
