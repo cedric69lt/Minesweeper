@@ -13,7 +13,8 @@ import { GameState } from '../../../types/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ Utils --------------------------------------------------------
-import { discoverAroundCell, revealAllGrid, startGame } from '../../../utils/game';
+import { discoverAroundCell, revealAllGrid } from '../../../utils/gameInteractions';
+import { startGame } from '../../../utils/generation';
 // ---------------------------------------------------------------------------------------------------------------------
 
 export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStateAction<GridType>>, gameState: GameState, setGameState: SetterOrUpdater<GameState>) => {

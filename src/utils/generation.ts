@@ -1,7 +1,6 @@
-import { Difficulty, CellValue, GridType } from '../types/game';
 import { getRandomArbitrary } from './generics';
-import Bomb from '../assets/bomb.png';
-import Flag from '../assets/flag.png';
+import { Difficulty, CellValue, GridType } from '../types/game';
+import { checkAroundCell } from './gameInteractions';
 
 export const genGrid = (size: number): GridType => {
 	let grid: GridType = Array.apply(null, Array(size)).map(() => {
@@ -17,7 +16,7 @@ export const genGrid = (size: number): GridType => {
 	return grid;
 };
 
-export const genBombs = (grid: GridType, difficulty: Difficulty) => {
+const genBombs = (grid: GridType, difficulty: Difficulty) => {
 	const surface = grid.length * grid.length;
 
 	let bombs = 0;
@@ -60,7 +59,7 @@ export const genBombs = (grid: GridType, difficulty: Difficulty) => {
 	return { grid: grid, bombsCount: bombs };
 };
 
-export const genNumbers = (grid: GridType): GridType => {
+const genNumbers = (grid: GridType): GridType => {
 	for (let row = 0; row < grid.length; row++) {
 		for (let col = 0; col < grid[row].length; col++) {
 			if (grid[row][col].value === 'bomb') {
@@ -82,56 +81,6 @@ export const genNumbers = (grid: GridType): GridType => {
 	}
 
 	return grid;
-};
-
-export const checkAroundCell = (grid: GridType, row: number, col: number, callback: Function): void => {
-	for (let testRowIndex = -1; testRowIndex <= 1; testRowIndex++) {
-		const testedRow = row + testRowIndex;
-
-		if (testedRow < 0) continue;
-		if (testedRow >= grid.length) continue;
-
-		for (let testColIndex = -1; testColIndex <= 1; testColIndex++) {
-			const testedCol = col + testColIndex;
-
-			if (testedCol < 0) continue;
-			if (testedCol >= grid.length) continue;
-			if (testedRow === row && testedCol === col) continue;
-
-			callback(grid[testedRow][testedCol], testedRow, testedCol);
-		}
-	}
-};
-
-export const discoverAroundCell = (grid: GridType, rowIndex: number, colIndex: number): GridType => {
-	grid[rowIndex][colIndex].hidden = false;
-
-	checkAroundCell(grid, rowIndex, colIndex, (cell: { hidden: boolean; value: CellValue; flag: boolean }, testedRowIndex: number, testedColIndex: number) => {
-		if (!cell.flag && cell.hidden) {
-			if (cell.value === 'empty') {
-				grid = discoverAroundCell(grid, testedRowIndex, testedColIndex);
-			} else if (typeof cell.value === 'number') {
-				grid[testedRowIndex][testedColIndex].hidden = false;
-			}
-		}
-	});
-
-	return grid;
-};
-
-export const revealAllGrid = (grid: GridType, excludeGoodFlags: boolean = true) => {
-	return grid.map((row) => {
-		return row.map((col) => {
-			if (excludeGoodFlags && col.value === 'bomb' && col.flag) {
-				return col;
-			}
-			return {
-				...col,
-				hidden: false,
-				flag: false,
-			};
-		});
-	});
 };
 
 export const startGame = (size: number, difficulty: Difficulty, needEmpty: boolean = true, rowIndex?: number, colIndex?: number): { grid: GridType; bombsCount: number } => {
@@ -161,29 +110,4 @@ export const startGame = (size: number, difficulty: Difficulty, needEmpty: boole
 	grid = genNumbers(bombsGrid);
 
 	return { grid, bombsCount };
-};
-
-export const getCellDisplayContent = (cell: { hidden: boolean; flag: boolean; value: CellValue }) => {
-	if (cell.hidden && cell.flag) {
-		return (
-			<img
-				src={Flag}
-				alt='flag'
-			/>
-		);
-	}
-
-	if (!cell.hidden) {
-		if (cell.value === 'bomb') {
-			return (
-				<img
-					src={Bomb}
-					alt='bomb'
-				/>
-			);
-		}
-		if (cell.value !== 'empty') {
-			return cell.value;
-		}
-	}
 };
