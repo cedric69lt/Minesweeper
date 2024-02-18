@@ -1,13 +1,13 @@
 {
 	"name": "demineur",
-	"version": "0.0.0",
+	"version": "1.0.0",
 	"description": "Démineur en ReactJS & TypeScript",
 	"author": "KeunotorCagoulé",
 	"private": true,
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"docker:build": "docker rmi minesweeper:latest && docker build -t minesweeper:latest ."
+		"docker:build": "docker rmi minesweeper && docker build -t minesweeper ."
 	},
 	"dependencies": {
 		"@types/node": "^20.11.16",
