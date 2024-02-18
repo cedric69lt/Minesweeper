@@ -44,7 +44,12 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 					return revealAllGrid(grid, true);
 				}
 
-				return discoverAroundCell(prev, rowIndex, colIndex);
+				if (prev[rowIndex][colIndex].value === 'empty') {
+					return discoverAroundCell(prev, rowIndex, colIndex);
+				}
+
+				prev[rowIndex][colIndex].hidden = false;
+				return prev;
 			});
 			forceUpdate();
 		}
