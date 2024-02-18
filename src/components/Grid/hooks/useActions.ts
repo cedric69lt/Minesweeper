@@ -44,8 +44,8 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 
 				// If the clicked cell hide a bomb, loose immediatly
 				if (prev[rowIndex][colIndex].value === 'bomb') {
-					setGameState((prev) => ({
-						...prev,
+					setGameState((prevGameState) => ({
+						...prevGameState,
 						endType: 'loose',
 					}));
 					return revealAllGrid(grid, true);
@@ -57,12 +57,12 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 					prev[rowIndex][colIndex].hidden = false;
 				}
 
-				if (hasWin(prev, bombsCount || gameState.bombs)) {
-					setGameState((prev) => ({
-						...prev,
+				if (hasWin(prev, bombsCount || gameState.bombs, gameState.placedFlags)) {
+					setGameState((prevGameState) => ({
+						...prevGameState,
 						endType: 'win',
 					}));
-					return revealAllGrid(grid, true);
+					return revealAllGrid(prev, true);
 				}
 
 				return prev;
@@ -115,7 +115,7 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 					return row;
 				});
 
-				if (hasWin(prev, bombsCount || gameState.bombs)) {
+				if (hasWin(prev, bombsCount || gameState.bombs, gameState.placedFlags)) {
 					setGameState((prev) => ({
 						...prev,
 						endType: 'win',
@@ -134,7 +134,7 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 	};
 };
 
-const hasWin = (grid: GridType, bombs: number) => {
+const hasWin = (grid: GridType, bombs: number, placedFlags: number) => {
 	let bombsFlagged = 0;
 
 	grid.map((row) => {
@@ -145,7 +145,7 @@ const hasWin = (grid: GridType, bombs: number) => {
 		});
 	});
 
-	if (bombsFlagged === bombs) {
+	if (bombsFlagged === bombs && placedFlags === bombs) {
 		return true;
 	}
 
