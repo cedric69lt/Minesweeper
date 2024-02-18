@@ -1,0 +1,16 @@
+# Developement
+.git
+.prettierrc
+.gitignore
+README.md
+
+# Node
+node_modules
+npm-debug.log
+
+# Build
+build
+
+# Docker
+Dockerfile
+.dockerignore
