@@ -21,6 +21,7 @@ import CalendarIcon from '../../assets/calendar';
 import Replay from '../../assets/replay';
 import Settings from '../../assets/settings';
 import TimerIcon from '../../assets/timer';
+import Trash from '../../assets/trash';
 import './styles.scss';
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -88,6 +89,17 @@ const LeaderBoard = () => {
 				>
 					<Settings />
 					Paramètres
+				</button>
+
+				<button
+					className='controlButton clear'
+					onClick={() => {
+						setGameState((prev) => ({ ...prev, status: 'settings', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }));
+						store.setItem('leaderboard', []);
+					}}
+				>
+					<Trash />
+					Supprimer
 				</button>
 
 				<button
