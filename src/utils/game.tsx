@@ -1,5 +1,7 @@
 import { Difficulty, CellValue, GridType } from '../types/game';
 import { getRandomArbitrary } from './generics';
+import Bomb from '../assets/bomb.png';
+import Flag from '../assets/flag.png';
 
 export const genGrid = (size: number): GridType => {
 	let grid: GridType = Array.apply(null, Array(size)).map(() => {
@@ -174,4 +176,29 @@ export const startGame = (grid: GridType, difficulty: Difficulty, needEmpty: boo
 	grid = genNumbers(grid);
 
 	return { grid, bombsCount };
+};
+
+export const getCellContent = (cell: { hidden: boolean; flag: boolean; value: CellValue }) => {
+	if (cell.hidden && cell.flag) {
+		return (
+			<img
+				src={Flag}
+				alt='flag'
+			/>
+		);
+	}
+
+	if (!cell.hidden) {
+		if (cell.value === 'bomb') {
+			return (
+				<img
+					src={Bomb}
+					alt='bomb'
+				/>
+			);
+		}
+		if (cell.value !== 'empty') {
+			return cell.value;
+		}
+	}
 };
