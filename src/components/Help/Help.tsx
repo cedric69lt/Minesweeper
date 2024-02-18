@@ -18,7 +18,7 @@ const Help = ({ onClose }: { onClose: () => void }) => {
 				onClick={(ev) => ev.stopPropagation()}
 			>
 				<div className='header'>
-					<p className='title'>Comment jouer ?</p>
+					<p className='headerTitle'>Comment jouer ?</p>
 					<button
 						className='closeButton'
 						onClick={onClose}
