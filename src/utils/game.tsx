@@ -7,16 +7,12 @@ export const genGrid = (size: number): GridType => {
 	let grid: GridType = Array.apply(null, Array(size)).map(() => {
 		return Array.apply(null, Array(size)).map(() => {
 			return {
-				// hidden: false,
 				hidden: true,
 				value: 'empty',
 				flag: false,
 			};
 		});
 	});
-
-	// grid = genBombs(grid, 'beginner');
-	// grid = genNumbers(grid);
 
 	return grid;
 };
@@ -148,24 +144,26 @@ export const revealAllGrid = (grid: GridType, excludeGoodFlags: boolean = true) 
 	});
 };
 
-export const startGame = (grid: GridType, difficulty: Difficulty, needEmpty: boolean = true, rowIndex?: number, colIndex?: number): { grid: GridType; bombsCount: number } => {
+export const startGame = (size: number, difficulty: Difficulty, needEmpty: boolean = true, rowIndex?: number, colIndex?: number): { grid: GridType; bombsCount: number } => {
+	let grid = genGrid(size);
+
 	if (needEmpty) {
-		if (rowIndex === undefined || rowIndex < 0 || rowIndex >= grid.length) {
+		if (rowIndex === undefined || rowIndex < 0 || rowIndex >= size) {
 			throw Error('Missing rowIndex and/or colIndex parameters.');
-		} else if (colIndex === undefined || colIndex < 0 || colIndex >= grid[rowIndex].length) {
+		} else if (colIndex === undefined || colIndex < 0 || colIndex >= size) {
 			throw Error('Missing rowIndex and/or colIndex parameters.');
 		}
 
 		let bombsCount = 0;
 
 		do {
+			grid = genGrid(size);
 			const { grid: bombsGrid, bombsCount: bombsCountFromGen } = genBombs(grid, difficulty as Difficulty);
-			grid = bombsGrid;
+			grid = genNumbers(bombsGrid);
 
 			bombsCount = bombsCountFromGen;
 		} while (grid[rowIndex][colIndex].value !== 'empty');
 
-		grid = genNumbers(grid);
 		return { grid, bombsCount };
 	}
 

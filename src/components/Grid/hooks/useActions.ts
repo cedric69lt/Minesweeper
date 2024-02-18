@@ -30,7 +30,7 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 
 				// Start the game with making sure the clicked cell will be empty after generation
 				if (gameState.status === 'idle') {
-					const { grid: newGrid, bombsCount: _bombsCount } = startGame(prev, gameState.difficulty as Difficulty, true, rowIndex, colIndex);
+					const { grid: newGrid, bombsCount: _bombsCount } = startGame(gameState.gridSize, gameState.difficulty as Difficulty, true, rowIndex, colIndex);
 					prev = newGrid;
 
 					bombsCount = _bombsCount;
@@ -83,7 +83,7 @@ export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStat
 
 				// Start the game without making sure the clicked cell will be empty after generation
 				if (gameState.status === 'idle') {
-					const { grid: newGrid, bombsCount: _bombsCount } = startGame(prev, gameState.difficulty as Difficulty, false);
+					const { grid: newGrid, bombsCount: _bombsCount } = startGame(gameState.gridSize, gameState.difficulty as Difficulty, false);
 					prev = newGrid;
 
 					bombsCount = _bombsCount;
