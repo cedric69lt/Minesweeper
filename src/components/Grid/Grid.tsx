@@ -16,7 +16,7 @@ import { useActions } from './hooks/useActions';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ Utils --------------------------------------------------------
-import { genGrid, getCellContent } from '../../utils/game';
+import { genGrid, getCellDisplayContent } from '../../utils/game';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Assets --------------------------------------------------------
@@ -53,7 +53,7 @@ const Grid = () => {
 								onClick={(ev) => handleLeftClick(ev, rowIndex, cellIndex)}
 								onContextMenu={(ev) => handleRightClick(ev, rowIndex, cellIndex)}
 							>
-								{getCellContent(cell)}
+								{getCellDisplayContent(cell)}
 							</button>
 						);
 					})}

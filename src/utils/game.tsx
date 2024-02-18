@@ -30,43 +30,29 @@ export const genBombs = (grid: GridType, difficulty: Difficulty) => {
 	}
 
 	bombs = Math.floor(bombs);
+
 	for (let i = 1; i <= bombs; i++) {
 		let needRegenerate = false;
 
 		do {
-			needRegenerate = false;
 			const row = getRandomArbitrary(0, grid.length);
 			const col = getRandomArbitrary(0, grid.length);
+
 			let bombsArounds = 0;
 
-			for (let testRowIndex = -1; testRowIndex <= 1; testRowIndex++) {
-				const testedRow = row + testRowIndex;
-
-				if (testedRow < 0) continue;
-				if (testedRow >= grid.length) continue;
-
-				for (let testColIndex = -1; testColIndex <= 1; testColIndex++) {
-					const testedCol = col + testColIndex;
-
-					if (testedCol < 0) continue;
-					if (testedCol >= grid.length) continue;
-					if (testedRow === row && testedCol === col) continue;
-
-					if (grid[testedRow][testedCol].value === 'bomb') {
-						bombsArounds++;
-
-						if (bombsArounds > 3) {
-							needRegenerate = true;
-							break;
-						}
-					}
-				}
-
-				if (needRegenerate) break;
+			if (grid[row][col].value === 'bomb') {
+				continue;
 			}
+
+			checkAroundCell(grid, row, col, (cell: { hidden: boolean; flag: boolean; value: CellValue }) => {
+				if (cell.value === 'bomb') {
+					bombsArounds++;
+				}
+			});
 
 			if (bombsArounds <= 3) {
 				grid[row][col].value = 'bomb';
+				needRegenerate = false;
 			}
 		} while (needRegenerate);
 	}
@@ -77,9 +63,13 @@ export const genBombs = (grid: GridType, difficulty: Difficulty) => {
 export const genNumbers = (grid: GridType): GridType => {
 	for (let row = 0; row < grid.length; row++) {
 		for (let col = 0; col < grid[row].length; col++) {
+			if (grid[row][col].value === 'bomb') {
+				continue;
+			}
+
 			let bombsArounds = 0;
 
-			checkAroundCell(grid, row, col, (testedCell: { hidden: boolean; value: CellValue }, testedRow: number, testedCol: number) => {
+			checkAroundCell(grid, row, col, (testedCell: { hidden: boolean; value: CellValue }) => {
 				if (testedCell.value === 'bomb') {
 					bombsArounds++;
 				}
@@ -168,14 +158,12 @@ export const startGame = (size: number, difficulty: Difficulty, needEmpty: boole
 	}
 
 	const { grid: bombsGrid, bombsCount } = genBombs(grid, difficulty);
-	grid = bombsGrid;
-
-	grid = genNumbers(grid);
+	grid = genNumbers(bombsGrid);
 
 	return { grid, bombsCount };
 };
 
-export const getCellContent = (cell: { hidden: boolean; flag: boolean; value: CellValue }) => {
+export const getCellDisplayContent = (cell: { hidden: boolean; flag: boolean; value: CellValue }) => {
 	if (cell.hidden && cell.flag) {
 		return (
 			<img
