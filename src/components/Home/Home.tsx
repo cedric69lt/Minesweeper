@@ -56,6 +56,7 @@ const Home = () => {
 					<p className='settingLabel'>Taille de la grille</p>
 					<select
 						ref={sizeRef}
+						name='gridSize'
 						className='select'
 						defaultValue={'12'}
 					>
@@ -69,6 +70,7 @@ const Home = () => {
 					<p className='settingLabel'>Difficulté</p>
 					<select
 						ref={difficultyRef}
+						name='difficulty'
 						className='select'
 						defaultValue={'beginner'}
 					>

@@ -1,21 +1,28 @@
 {
-	"short_name": "Démineur",
-	"name": "Démineur",
+	"id": "/",
+	"short_name": "Minesweeper",
+	"name": "Minesweeper",
+	"description": "ReactJS made Minesweeper game",
+	"display": "standalone",
+	"orientation": "portrait",
+	"lang": "fr-FR",
+	"start_url": "/",
+	"dir": "left",
+	"theme_color": "#ffffff",
+	"background_color": "#598b8e",
+	"display_override": ["window-controls-overlay"],
 	"icons": [
-		{
-			"src": "favicon.ico",
-			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
-		},
 		{
 			"src": "logo.png",
 			"type": "image/png",
-			"sizes": "512x512"
+			"sizes": "512x512",
+			"purpose": "any"
+		},
+		{
+			"src": "maskable_logo.png",
+			"type": "image/png",
+			"sizes": "512x512",
+			"purpose": "maskable"
 		}
-	],
-	"start_url": ".",
-	"display": "standalone",
-	"theme_color": "#000000",
-	"background_color": "#ffffff"
+	]
 }
-
