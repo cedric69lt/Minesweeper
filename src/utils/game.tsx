@@ -166,7 +166,6 @@ export const startGame = (grid: GridType, difficulty: Difficulty, needEmpty: boo
 		} while (grid[rowIndex][colIndex].value !== 'empty');
 
 		grid = genNumbers(grid);
-		// console.log(grid, bombsCount);
 		return { grid, bombsCount };
 	}
 
