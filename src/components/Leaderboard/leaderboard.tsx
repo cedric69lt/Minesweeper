@@ -84,7 +84,7 @@ const LeaderBoard = () => {
 			<div className='controls'>
 				<button
 					className='controlButton home'
-					onClick={() => setGameState((prev) => ({ ...prev, status: 'settings' }))}
+					onClick={() => setGameState((prev) => ({ ...prev, status: 'settings', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }))}
 				>
 					<Settings />
 					Paramètres
