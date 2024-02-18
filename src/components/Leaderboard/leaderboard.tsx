@@ -6,7 +6,7 @@
 import { useEffect, useState } from 'react';
 // ---------------------------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------ Recoil & Stockage --------------------------------------------------
+// ----------------------------------------------- Context & Stockage --------------------------------------------------
 import localforage from 'localforage';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../contexts/gameState';

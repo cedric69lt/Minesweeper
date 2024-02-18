@@ -2,11 +2,19 @@
 //!                                                       Imports
 // ---------------------------------------------------------------------------------------------------------------------
 
+// ------------------------------------------------------ React --------------------------------------------------------
 import { MouseEvent, useCallback, useState } from 'react';
-import { Difficulty, GridType } from '../../../types/game';
-import { discoverAroundCell, revealAllGrid, startGame } from '../../../utils/game';
-import { GameState } from '../../../types/gameState';
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------ Types --------------------------------------------------------
 import { SetterOrUpdater } from 'recoil';
+import { Difficulty, GridType } from '../../../types/game';
+import { GameState } from '../../../types/gameState';
+// ---------------------------------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------ Utils --------------------------------------------------------
+import { discoverAroundCell, revealAllGrid, startGame } from '../../../utils/game';
+// ---------------------------------------------------------------------------------------------------------------------
 
 export const useActions = (grid: GridType, setGrid: React.Dispatch<React.SetStateAction<GridType>>, gameState: GameState, setGameState: SetterOrUpdater<GameState>) => {
 	const [, updateGrid] = useState({});
