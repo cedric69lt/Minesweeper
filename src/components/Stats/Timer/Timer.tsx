@@ -62,7 +62,10 @@ const Timer = () => {
 			}));
 
 			clearInterval(intervalId);
-			saveToLocalStorage(displayedTime);
+
+			if (gameState.endType === 'win') {
+				saveToLocalStorage(displayedTime);
+			}
 		}
 	}, [intervalId, gameState.endType, setGameState, displayedTime]);
 
