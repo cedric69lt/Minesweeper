@@ -13,13 +13,14 @@ import { gameStateAtom } from '../../contexts/gameState';
 
 // ------------------------------------------------------ Utils --------------------------------------------------------
 import { Difficulty } from '../../types/game';
-import { discoverAroundCell, genGrid, startGame } from '../../utils/game';
+import { discoverAroundCell, genGrid, revealAllGrid, startGame } from '../../utils/game';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Assets --------------------------------------------------------
 import Bomb from '../../assets/bomb.png';
 import Flag from '../../assets/flag.png';
 import './styles.scss';
+import Podium from '../../assets/podium';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Grid = () => {
@@ -45,6 +46,14 @@ const Grid = () => {
 						status: 'playing',
 						bombs: bombsCount,
 					}));
+				}
+
+				if (prev[rowIndex][colIndex].value === 'bomb') {
+					setGameState((prev) => ({
+						...prev,
+						endType: 'loose',
+					}));
+					return revealAllGrid(grid, true);
 				}
 
 				return discoverAroundCell(prev, rowIndex, colIndex);
@@ -138,6 +147,25 @@ const Grid = () => {
 					})}
 				</div>
 			))}
+			{gameState.endType !== '' && (
+				<div
+					className='overlay'
+					style={
+						{
+							'--overlayColor': gameState.endType === 'win' ? '#5f8e59' : '#ca5940',
+						} as React.CSSProperties
+					}
+				>
+					<p className='overlayTitle'>{gameState.endType === 'win' ? 'Gagné !' : 'Perdu !'}</p>
+					<button
+						className='overlayButton'
+						onClick={() => setGameState((prev) => ({ ...prev, status: 'board' }))}
+					>
+						<Podium />
+						Leaderboard
+					</button>
+				</div>
+			)}
 		</div>
 	);
 };

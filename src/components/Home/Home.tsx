@@ -39,13 +39,9 @@ const Home = () => {
 					<select
 						ref={sizeRef}
 						className='select'
+						defaultValue={'12'}
 					>
-						<option
-							value='12'
-							selected
-						>
-							Petit
-						</option>
+						<option value='12'>Petit</option>
 						<option value='16'>Moyen</option>
 						<option value='20'>Grand</option>
 					</select>
@@ -56,13 +52,9 @@ const Home = () => {
 					<select
 						ref={difficultyRef}
 						className='select'
+						defaultValue={'beginner'}
 					>
-						<option
-							value='beginner'
-							selected
-						>
-							Facile
-						</option>
+						<option value='beginner'>Facile</option>
 						<option value='intermediate'>Moyen</option>
 						<option value='expert'>Difficile</option>
 					</select>

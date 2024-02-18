@@ -47,7 +47,7 @@ const LeaderBoard = () => {
 		if (data.length === 0) {
 			getData();
 		}
-	}, []);
+	}, [data.length]);
 
 	return (
 		<>
@@ -93,7 +93,7 @@ const LeaderBoard = () => {
 
 				<button
 					className='controlButton replay'
-					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle', endType: '', placedFlags: 0, bombs: 0, gameTime: 0 }))}
+					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }))}
 				>
 					<Replay />
 					Rejouer

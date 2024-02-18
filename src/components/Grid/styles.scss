@@ -1,5 +1,6 @@
 .grid {
 	--size: 30px;
+	position: relative;
 	display: grid;
 	gap: 2px;
 	padding: 2px;
@@ -71,6 +72,41 @@
 			&:last-child {
 				border-bottom-right-radius: 5px;
 			}
+		}
+	}
+
+	& > .overlay {
+		z-index: 1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 30px;
+		width: 100%;
+		height: 100%;
+		background-color: rgba($color: #000000, $alpha: 0.3);
+		backdrop-filter: blur(1px);
+
+		& > .overlayTitle {
+			font-size: 2.5em;
+			color: var(--overlayColor);
+		}
+
+		& > .overlayButton {
+			display: grid;
+			grid-template-columns: 1.1em auto;
+			place-items: center;
+			gap: 10px;
+			padding: 10px 25px;
+			border: none;
+			border-radius: 5px;
+			background-color: var(--overlayColor);
+			font-size: 1em;
+			color: #ffff;
+			cursor: pointer;
 		}
 	}
 }

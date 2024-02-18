@@ -14,23 +14,25 @@ import { gameStateAtom } from '../../../contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Timer = () => {
-	const [{ status }] = useRecoilState(gameStateAtom);
+	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 
+	const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 	const [startedTime, setStartedTime] = useState<number | null>(null);
 	const [displayedTime, setDisplayedTime] = useState<string>('00:00');
 
 	useEffect(() => {
-		if (status === 'playing') {
-			setStartedTime(Date.now());
-		} else if (status === 'win' || status === 'loose') {
+		if (gameState.status === 'win' || gameState.status === 'loose') {
 			setStartedTime(null);
 		}
-	}, [status]);
+	}, [gameState.status]);
 
 	useEffect(() => {
-		if (startedTime) {
+		if (!startedTime && gameState.endType === '' && gameState.status === 'playing') {
+			const now = Date.now();
+			setStartedTime(now);
+
 			const interval = setInterval(() => {
-				const elapsedTime = (Date.now() - startedTime) / 1000;
+				const elapsedTime = (Date.now() - now) / 1000;
 
 				const seconds = Math.floor(elapsedTime % 60);
 				const strSeconds = seconds < 10 ? `0${seconds}` : `${seconds}`;
@@ -41,9 +43,19 @@ const Timer = () => {
 				setDisplayedTime(`${strMinute}:${strSeconds}`);
 			}, 500);
 
-			return () => clearInterval(interval);
+			setIntervalId(interval);
 		}
-	}, [startedTime]);
+	}, [startedTime, gameState.endType, gameState.status]);
+
+	useEffect(() => {
+		if (intervalId && gameState.endType !== '') {
+			setGameState((prev) => ({
+				...prev,
+				gameTime: displayedTime,
+			}));
+			clearInterval(intervalId);
+		}
+	}, [intervalId, gameState.endType, setGameState, displayedTime]);
 
 	return (
 		<div className='statContainer'>

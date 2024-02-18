@@ -19,7 +19,7 @@ export const gameStateAtom = atom({
 		gridSize: 12,
 		bombs: 0,
 		placedFlags: 0,
-		gameTime: 0,
+		gameTime: '',
 		endType: '',
 	},
 });
