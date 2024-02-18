@@ -3,17 +3,35 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Styles --------------------------------------------------------
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import './styles.scss';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../contexts/gameState';
+import localforage from 'localforage';
 // ---------------------------------------------------------------------------------------------------------------------
+
+const store = localforage.createInstance({
+	name: 'leaderboard',
+	driver: localforage.INDEXEDDB,
+	version: 1.0,
+	storeName: 'leaderboard',
+	description: 'Store 10 best game time',
+});
 
 const Home = () => {
 	const difficultyRef = useRef<HTMLSelectElement>(null);
 	const sizeRef = useRef<HTMLSelectElement>(null);
 
 	const [, setGameState] = useRecoilState(gameStateAtom);
+
+	useEffect(() => {
+		const initIDB = async () => {
+			if ((await store.getItem('leaderboard')) === null) {
+				await store.setItem('leaderboard', []);
+			}
+		};
+		initIDB();
+	}, []);
 
 	const onClick = () => {
 		if (difficultyRef.current !== null && sizeRef.current !== null) {

@@ -39,9 +39,8 @@ const LeaderBoard = () => {
 	useEffect(() => {
 		const getData = async () => {
 			const storeData = await store.getItem<LeaderBoardItem[]>('leaderboard');
-			if (storeData) {
-				setData(storeData);
-			}
+
+			setData(storeData || []);
 		};
 
 		if (data.length === 0) {

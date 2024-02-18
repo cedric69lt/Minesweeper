@@ -11,6 +11,7 @@ import Clock from '../../../assets/clock';
 import '../styles.scss';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../../contexts/gameState';
+import { saveToLocalStorage } from '../../../utils/generics';
 // ---------------------------------------------------------------------------------------------------------------------
 
 const Timer = () => {
@@ -53,7 +54,9 @@ const Timer = () => {
 				...prev,
 				gameTime: displayedTime,
 			}));
+
 			clearInterval(intervalId);
+			saveToLocalStorage(displayedTime);
 		}
 	}, [intervalId, gameState.endType, setGameState, displayedTime]);
 
