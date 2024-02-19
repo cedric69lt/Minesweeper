@@ -30,8 +30,16 @@
 			gap: 20px;
 
 			& > .settingLabel {
+				display: flex;
+				flex-wrap: nowrap;
+				align-items: center;
+				gap: 5px;
 				font-size: 1.2rem;
 				color: #f39440;
+
+				& > svg {
+					width: 1.2em;
+				}
 			}
 
 			& > .select {

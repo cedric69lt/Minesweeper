@@ -40,9 +40,6 @@ const LeaderBoard = () => {
 	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 	const [data, setData] = useState<LeaderBoardItem[]>([]);
 
-	const [, updateLeaderboard] = useState({});
-	const forceUpdate = useCallback(() => updateLeaderboard({}), []);
-
 	const getData = async () => {
 		const storeData = await store.getItem<LeaderBoardItem[]>(`${gameState.difficulty}:${gameState.gridSize}`);
 
@@ -53,7 +50,7 @@ const LeaderBoard = () => {
 		if (data.length === 0) {
 			getData();
 		}
-	}, [data.length]);
+	}, [data.length, getData]);
 
 	const clearAllLeaderboards = async () => {
 		const keys = await store.keys();

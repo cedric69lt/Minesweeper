@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ React --------------------------------------------------------
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------- Context & Stockage --------------------------------------------------
@@ -13,6 +13,8 @@ import { gameStateAtom } from '../../contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Styles --------------------------------------------------------
+import Size from '../../assets/size';
+import Difficulty from '../../assets/difficulty';
 import './styles.scss';
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -57,7 +59,10 @@ const Home = () => {
 
 			<div className='settingsContainer'>
 				<div className='selectorBox'>
-					<p className='settingLabel'>Taille de la grille</p>
+					<p className='settingLabel'>
+						<Size />
+						Taille de la grille
+					</p>
 					<select
 						ref={sizeRef}
 						name='gridSize'
@@ -71,7 +76,10 @@ const Home = () => {
 				</div>
 
 				<div className='selectorBox'>
-					<p className='settingLabel'>Difficulté</p>
+					<p className='settingLabel'>
+						<Difficulty />
+						Difficulté
+					</p>
 					<select
 						ref={difficultyRef}
 						name='difficulty'
