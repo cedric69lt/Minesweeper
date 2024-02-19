@@ -68,7 +68,7 @@ const Timer = () => {
 				saveToLocalStorage(displayedTime, gameState.difficulty as Difficulty, gameState.gridSize);
 			}
 		}
-	}, [intervalId, gameState.endType, setGameState, displayedTime]);
+	}, [intervalId, gameState.endType, gameState.difficulty, gameState.gridSize, setGameState, displayedTime]);
 
 	return (
 		<div className='statContainer'>
