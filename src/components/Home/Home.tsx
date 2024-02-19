@@ -30,19 +30,17 @@ const Home = () => {
 
 	const [, setGameState] = useRecoilState(gameStateAtom);
 
-	useEffect(() => {
-		const initIDB = async () => {
-			if ((await store.getItem('leaderboard')) === null) {
-				await store.setItem('leaderboard', []);
-			}
-		};
-		initIDB();
-	}, []);
-
 	const onClick = () => {
 		if (difficultyRef.current !== null && sizeRef.current !== null) {
 			const difficulty = difficultyRef.current.value;
 			const size = sizeRef.current.value;
+
+			const initIDB = async () => {
+				if ((await store.getItem(`${difficulty}:${size}`)) === null) {
+					await store.setItem(`${difficulty}:${size}`, []);
+				}
+			};
+			initIDB();
 
 			setGameState((prev) => ({
 				...prev,

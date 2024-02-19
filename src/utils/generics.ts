@@ -7,7 +7,7 @@ import localforage from 'localforage';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ Types --------------------------------------------------------
-import { LeaderBoardItem } from '../types/game';
+import { Difficulty, LeaderBoardItem } from '../types/game';
 // ---------------------------------------------------------------------------------------------------------------------
 
 export const getRandomArbitrary = (min: number, max: number): number => {
@@ -22,8 +22,8 @@ const store = localforage.createInstance({
 	description: 'Store 10 best game time',
 });
 
-export const saveToLocalStorage = async (time: string) => {
-	let leaderboard = await store.getItem<LeaderBoardItem[]>('leaderboard');
+export const saveToLocalStorage = async (time: string, difficulty: Difficulty, gridSize: number) => {
+	let leaderboard = await store.getItem<LeaderBoardItem[]>(`${difficulty}:${gridSize}`);
 
 	const currentDate = new Date().toLocaleString().split(' ')[0];
 
@@ -42,5 +42,5 @@ export const saveToLocalStorage = async (time: string) => {
 		leaderboard = leaderboard.slice(0, 20);
 	}
 
-	await store.setItem('leaderboard', leaderboard);
+	await store.setItem(`${difficulty}:${gridSize}`, leaderboard);
 };

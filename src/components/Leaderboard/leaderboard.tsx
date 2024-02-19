@@ -34,12 +34,12 @@ const store = localforage.createInstance({
 });
 
 const LeaderBoard = () => {
-	const [, setGameState] = useRecoilState(gameStateAtom);
+	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 	const [data, setData] = useState<LeaderBoardItem[]>([]);
 
 	useEffect(() => {
 		const getData = async () => {
-			const storeData = await store.getItem<LeaderBoardItem[]>('leaderboard');
+			const storeData = await store.getItem<LeaderBoardItem[]>(`${gameState.difficulty}:${gameState.gridSize}`);
 
 			setData(storeData || []);
 		};
@@ -95,7 +95,7 @@ const LeaderBoard = () => {
 					className='controlButton clear'
 					onClick={() => {
 						setGameState((prev) => ({ ...prev, status: 'settings', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }));
-						store.setItem('leaderboard', []);
+						store.setItem(`${gameState.difficulty}:${gameState.gridSize}`, []);
 					}}
 				>
 					<Trash />

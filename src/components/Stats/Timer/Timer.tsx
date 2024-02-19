@@ -11,7 +11,8 @@ import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../../contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------ Utils --------------------------------------------------------
+// -------------------------------------------------- Utils & Types ----------------------------------------------------
+import { Difficulty } from '../../../types/game';
 import { saveToLocalStorage } from '../../../utils/generics';
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +65,7 @@ const Timer = () => {
 			clearInterval(intervalId);
 
 			if (gameState.endType === 'win') {
-				saveToLocalStorage(displayedTime);
+				saveToLocalStorage(displayedTime, gameState.difficulty as Difficulty, gameState.gridSize);
 			}
 		}
 	}, [intervalId, gameState.endType, setGameState, displayedTime]);
