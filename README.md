@@ -3,7 +3,7 @@
     <h1>Minesweeper</h1>
 </div>
 
-## Table of content
+## 📌 Table of content
 
 -   [Description](#description)
 -   [Techno used](#techno-used)
@@ -12,7 +12,7 @@
     -   [Docker](#docker)
 -   [Credits](#credits)
 
-## Description
+## 📖 Description
 
 Minesweeper is a game where the player has to clear a minefield without detonating any mine. The game is won when all the cells without a mine are revealed. The game is lost when a mine is revealed.
 
@@ -21,7 +21,7 @@ Minesweeper is a game where the player has to clear a minefield without detonati
     <img src="./assets/leaderboard.png" alt="game" width="45%" height="auto" />
 </div>
 
-## Techno used
+## ⚙️ Techno used
 
 <ul style="columns: 2">
     <li>React</li>
@@ -31,9 +31,9 @@ Minesweeper is a game where the player has to clear a minefield without detonati
     <li>Docker</li>
 </ul>
 
-## Installation
+## ⬇️ Installation
 
-### Local
+### 💻 Local
 
 -   Clone the repository
 
@@ -61,7 +61,7 @@ Minesweeper is a game where the player has to clear a minefield without detonati
     serve build
     ```
 
-### Docker
+### 🐳 Docker
 
 -   Build the image
 
@@ -75,7 +75,7 @@ Minesweeper is a game where the player has to clear a minefield without detonati
     docker run --name minesweeper -dp 3000:3000 minesweeper
     ```
 
-# Credits
+# 💑 Credits
 
 -   [KeunotorCagoule](https://www.github.com/KeunotorCagoule)
 -   [UnEpicier](https://www.github.com/UnEpicier)
