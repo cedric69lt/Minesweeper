@@ -3,7 +3,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ React --------------------------------------------------------
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------- Context & Stockage --------------------------------------------------
@@ -12,8 +12,9 @@ import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../contexts/gameState';
 // ---------------------------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------ Types --------------------------------------------------------
-import { LeaderBoardItem } from '../../types/game';
+// -------------------------------------------------- Utils & Types ----------------------------------------------------
+import { Difficulty, LeaderBoardItem } from '../../types/game';
+import { getDifficultyLabel } from '../../utils/generics';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Assets --------------------------------------------------------
@@ -22,6 +23,8 @@ import Replay from '../../assets/replay';
 import Settings from '../../assets/settings';
 import TimerIcon from '../../assets/timer';
 import Trash from '../../assets/trash';
+import DifficultyIcon from '../../assets/difficulty';
+import Size from '../../assets/size';
 import './styles.scss';
 // ---------------------------------------------------------------------------------------------------------------------
 
@@ -37,17 +40,29 @@ const LeaderBoard = () => {
 	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 	const [data, setData] = useState<LeaderBoardItem[]>([]);
 
+	const [, updateLeaderboard] = useState({});
+	const forceUpdate = useCallback(() => updateLeaderboard({}), []);
+
+	const getData = async () => {
+		const storeData = await store.getItem<LeaderBoardItem[]>(`${gameState.difficulty}:${gameState.gridSize}`);
+
+		setData(storeData || []);
+	};
+
 	useEffect(() => {
-		const getData = async () => {
-			const storeData = await store.getItem<LeaderBoardItem[]>(`${gameState.difficulty}:${gameState.gridSize}`);
-
-			setData(storeData || []);
-		};
-
 		if (data.length === 0) {
 			getData();
 		}
 	}, [data.length]);
+
+	const clearAllLeaderboards = async () => {
+		const keys = await store.keys();
+
+		for (let i = 0; i < keys.length; i++) {
+			await store.removeItem(keys[i]);
+		}
+		getData();
+	};
 
 	return (
 		<>
@@ -59,6 +74,14 @@ const LeaderBoard = () => {
 					<p>
 						<CalendarIcon />
 						Date
+					</p>
+					<p>
+						<DifficultyIcon style={{ rotate: '-45deg' }} />
+						Difficulté
+					</p>
+					<p>
+						<Size />
+						Taille
 					</p>
 					<p>
 						<TimerIcon />
@@ -75,6 +98,8 @@ const LeaderBoard = () => {
 							>
 								<span>{index + 1}</span>
 								<span>{item.date}</span>
+								<span>{getDifficultyLabel(gameState.difficulty as Difficulty)}</span>
+								<span>{gameState.gridSize}</span>
 								<span>{item.time}</span>
 							</div>
 						);
@@ -92,10 +117,18 @@ const LeaderBoard = () => {
 				</button>
 
 				<button
+					className='controlButton replay'
+					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }))}
+				>
+					<Replay />
+					Rejouer
+				</button>
+
+				<button
 					className='controlButton clear'
-					onClick={() => {
-						setGameState((prev) => ({ ...prev, status: 'settings', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }));
-						store.setItem(`${gameState.difficulty}:${gameState.gridSize}`, []);
+					onClick={async () => {
+						await store.setItem(`${gameState.difficulty}:${gameState.gridSize}`, []);
+						await getData();
 					}}
 				>
 					<Trash />
@@ -103,11 +136,11 @@ const LeaderBoard = () => {
 				</button>
 
 				<button
-					className='controlButton replay'
-					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }))}
+					className='controlButton clearAll'
+					onClick={clearAllLeaderboards}
 				>
 					<Replay />
-					Rejouer
+					Tout supprimer
 				</button>
 			</div>
 		</>

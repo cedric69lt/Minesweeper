@@ -44,3 +44,10 @@ export const saveToLocalStorage = async (time: string, difficulty: Difficulty, g
 
 	await store.setItem(`${difficulty}:${gridSize}`, leaderboard);
 };
+
+export const getDifficultyLabel = (difficulty: Difficulty): string => {
+	if (difficulty == 'beginner') return 'Débutant';
+	if (difficulty == 'intermediate') return 'Intermédiaire';
+	if (difficulty == 'expert') return 'Expert';
+	return difficulty;
+};
