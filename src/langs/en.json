@@ -1,0 +1,32 @@
+{
+	"appTitle": "Minesweeper",
+	"settings": {
+		"size": {
+			"label": "Grid size",
+			"values": {
+				"small": "Small",
+				"medium": "Medium",
+				"large": "Large"
+			}
+		},
+		"difficulty": {
+			"label": "Difficulty",
+			"values": {
+				"beginner": "Beginner",
+				"intermediate": "Intermediate",
+				"expert": "Expert"
+			}
+		}
+	},
+	"start": "Start",
+	"how": "How to play?",
+	"win": "Win!",
+	"loose": "Loose!",
+	"leaderboardTitle": "Leaderboard",
+	"date": "Date",
+	"time": "Time",
+	"settingsBtn": "Settings",
+	"replay": "Replay",
+	"delete": "Delete",
+	"deleteAll": "Delete all"
+}

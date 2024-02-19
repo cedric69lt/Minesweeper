@@ -3,13 +3,14 @@
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ React --------------------------------------------------------
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------- Context & Stockage --------------------------------------------------
 import localforage from 'localforage';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../contexts/gameState';
+import { langAtom } from '../../contexts/langState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ----------------------------------------------------- Styles --------------------------------------------------------
@@ -31,6 +32,7 @@ const Home = () => {
 	const sizeRef = useRef<HTMLSelectElement>(null);
 
 	const [, setGameState] = useRecoilState(gameStateAtom);
+	const [lang] = useRecoilState(langAtom);
 
 	const onClick = () => {
 		if (difficultyRef.current !== null && sizeRef.current !== null) {
@@ -55,13 +57,13 @@ const Home = () => {
 
 	return (
 		<div className='gameContainer'>
-			<h1 className='title'>Démineur</h1>
+			<h1 className='title'>{lang.config.appTitle}</h1>
 
 			<div className='settingsContainer'>
 				<div className='selectorBox'>
 					<p className='settingLabel'>
 						<Size />
-						Taille de la grille
+						{lang.config.settings.size.label}
 					</p>
 					<select
 						ref={sizeRef}
@@ -69,16 +71,16 @@ const Home = () => {
 						className='select'
 						defaultValue={'12'}
 					>
-						<option value='12'>Petit</option>
-						<option value='16'>Moyen</option>
-						<option value='20'>Grand</option>
+						<option value='12'>{lang.config.settings.size.values.small}</option>
+						<option value='16'>{lang.config.settings.size.values.medium}</option>
+						<option value='20'>{lang.config.settings.size.values.large}</option>
 					</select>
 				</div>
 
 				<div className='selectorBox'>
 					<p className='settingLabel'>
 						<Difficulty />
-						Difficulté
+						{lang.config.settings.difficulty.label}
 					</p>
 					<select
 						ref={difficultyRef}
@@ -86,9 +88,9 @@ const Home = () => {
 						className='select'
 						defaultValue={'beginner'}
 					>
-						<option value='beginner'>Facile</option>
-						<option value='intermediate'>Moyen</option>
-						<option value='expert'>Difficile</option>
+						<option value='beginner'>{lang.config.settings.difficulty.values.beginner}</option>
+						<option value='intermediate'>{lang.config.settings.difficulty.values.intermediate}</option>
+						<option value='expert'>{lang.config.settings.difficulty.values.expert}</option>
 					</select>
 				</div>
 
@@ -96,7 +98,7 @@ const Home = () => {
 					className='startButton'
 					onClick={onClick}
 				>
-					Commencer
+					{lang.config.start}
 				</button>
 			</div>
 		</div>

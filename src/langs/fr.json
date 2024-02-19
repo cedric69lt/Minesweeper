@@ -1,0 +1,32 @@
+{
+	"appTitle": "Démineur",
+	"settings": {
+		"size": {
+			"label": "Taille de grille",
+			"values": {
+				"small": "Petit",
+				"medium": "Moyen",
+				"large": "Grand"
+			}
+		},
+		"difficulty": {
+			"label": "Difficulté",
+			"values": {
+				"beginner": "Facile",
+				"intermediate": "Intermédiaire",
+				"expert": "Difficile"
+			}
+		}
+	},
+	"start": "Commencer",
+	"how": "Comment jouer ?",
+	"win": "Gagné !",
+	"loose": "Perdu !",
+	"leaderboardTitle": "Tableau des scores",
+	"date": "Date",
+	"time": "Temps",
+	"settingsBtn": "Paramètres",
+	"replay": "Rejouer",
+	"delete": "Supprimer",
+	"deleteAll": "Tout supprimer"
+}

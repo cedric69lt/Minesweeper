@@ -9,6 +9,7 @@ import { useState } from 'react';
 // ----------------------------------------------------- Context -------------------------------------------------------
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../contexts/gameState';
+import { langAtom } from '../../contexts/langState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------ Hooks --------------------------------------------------------
@@ -28,6 +29,8 @@ import './styles.scss';
 const Grid = () => {
 	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 	const [grid, setGrid] = useState(genGrid(gameState.gridSize));
+
+	const [lang] = useRecoilState(langAtom);
 
 	const { handleLeftClick, handleRightClick } = useActions(grid, setGrid, gameState, setGameState);
 
@@ -69,7 +72,7 @@ const Grid = () => {
 						} as React.CSSProperties
 					}
 				>
-					<p className='overlayTitle'>{gameState.endType === 'win' ? 'Gagné !' : 'Perdu !'}</p>
+					<p className='overlayTitle'>{gameState.endType === 'win' ? lang.config.win : lang.config.loose}</p>
 					<button
 						className='overlayButton'
 						onClick={() => setGameState((prev) => ({ ...prev, status: 'board' }))}

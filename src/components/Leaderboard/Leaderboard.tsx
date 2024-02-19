@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import localforage from 'localforage';
 import { useRecoilState } from 'recoil';
 import { gameStateAtom } from '../../contexts/gameState';
+import { langAtom } from '../../contexts/langState';
 // ---------------------------------------------------------------------------------------------------------------------
 
 // -------------------------------------------------- Utils & Types ----------------------------------------------------
@@ -40,6 +41,8 @@ const LeaderBoard = () => {
 	const [gameState, setGameState] = useRecoilState(gameStateAtom);
 	const [data, setData] = useState<LeaderBoardItem[]>([]);
 
+	const [lang] = useRecoilState(langAtom);
+
 	const getData = async () => {
 		const storeData = await store.getItem<LeaderBoardItem[]>(`${gameState.difficulty}:${gameState.gridSize}`);
 
@@ -63,26 +66,26 @@ const LeaderBoard = () => {
 
 	return (
 		<>
-			<h1 className='title'>Time Leaderboard</h1>
+			<h1 className='title'>{lang.config.leaderboardTitle}</h1>
 
 			<div className='board'>
 				<div className='header'>
 					<p>#</p>
 					<p>
 						<CalendarIcon />
-						Date
+						{lang.config.date}
 					</p>
 					<p>
 						<DifficultyIcon style={{ rotate: '-45deg' }} />
-						Difficulté
+						{lang.config.settings.difficulty.label}
 					</p>
 					<p>
 						<Size />
-						Taille
+						{lang.config.settings.size.label}
 					</p>
 					<p>
 						<TimerIcon />
-						Time
+						{lang.config.time}
 					</p>
 				</div>
 
@@ -95,7 +98,7 @@ const LeaderBoard = () => {
 							>
 								<span>{index + 1}</span>
 								<span>{item.date}</span>
-								<span>{getDifficultyLabel(gameState.difficulty as Difficulty)}</span>
+								<span>{lang.config.settings.difficulty.values[gameState.difficulty]}</span>
 								<span>{gameState.gridSize}</span>
 								<span>{item.time}</span>
 							</div>
@@ -110,7 +113,8 @@ const LeaderBoard = () => {
 					onClick={() => setGameState((prev) => ({ ...prev, status: 'settings', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }))}
 				>
 					<Settings />
-					Paramètres
+
+					{lang.config.settingsBtn}
 				</button>
 
 				<button
@@ -118,7 +122,8 @@ const LeaderBoard = () => {
 					onClick={() => setGameState((prev) => ({ ...prev, status: 'idle', endType: '', placedFlags: 0, bombs: 0, gameTime: '' }))}
 				>
 					<Replay />
-					Rejouer
+
+					{lang.config.replay}
 				</button>
 
 				<button
@@ -129,7 +134,7 @@ const LeaderBoard = () => {
 					}}
 				>
 					<Trash />
-					Supprimer
+					{lang.config.delete}
 				</button>
 
 				<button
@@ -137,7 +142,7 @@ const LeaderBoard = () => {
 					onClick={clearAllLeaderboards}
 				>
 					<Replay />
-					Tout supprimer
+					{lang.config.deleteAll}
 				</button>
 			</div>
 		</>
