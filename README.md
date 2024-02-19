@@ -3,6 +3,10 @@
     <h1>Minesweeper</h1>
 </div>
 
+<p style="margin-top: 1em;">
+Live Demo: <a href="https://minesweeper.alexisvasseur.fr">https://minesweeper.alexisvasseur.fr</a>
+</p>
+
 ## 📌 Table of content
 
 -   [Description](#description)
