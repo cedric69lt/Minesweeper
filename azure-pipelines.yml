@@ -10,7 +10,7 @@ variables:
   imageRepository: 'cedricltminesweeper'
   containerRegistry: 'containerregistrycedric.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-
+  tags : 'minesweeper'
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -43,6 +43,6 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
-          minesweeper
+          $(tags)
         containerRegistryUsername: $(AcrAdminUsername)
         containerRegistryPassword: $(PasswordAcrAdmin)
