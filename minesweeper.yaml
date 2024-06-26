@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minesweeper-deployment
+  labels:
+    app: minesweeper
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: minesweeper
+  template:
+    metadata:
+      labels:
+        app: minesweeper
+    spec:
+      containers:
+      - name: minesweeper
+        image: containerregistrycedric.azurecr.io/cedricltminesweeper:testminesweeper
+        ports:
+        - containerPort: 80
