@@ -8,7 +8,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: '7f8599bd-6048-430f-bc93-8991e1f3dbf7'
   imageRepository: 'cedricltminesweeper'
-  containerRegistry: 'containerregistrycedric.azurecr.io'
+  containerRegistry: 'containerregistrycedric'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tags : 'minesweeper'
   # Agent VM image name
@@ -39,10 +39,11 @@ stages:
       displayName: Build and push an image to container registry
       inputs:
         command: buildAndPush
+        azureSubscription: 'ServicePrincipalConnectionCedric'
         repository: $(imageRepository)
         dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        ContainerRegistry: $(containerRegistry)
         tags: |
           $(tags)
-        containerRegistryUsername: $(AcrAdminUsername)
-        containerRegistryPassword: $(PasswordAcrAdmin)
+        #containerRegistryUsername: $(AcrAdminUsername)
+        #containerRegistryPassword: $(PasswordAcrAdmin)
