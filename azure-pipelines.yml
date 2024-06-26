@@ -1,4 +1,3 @@
-
 trigger:
 - main
 
@@ -28,8 +27,13 @@ stages:
       inputs:
         azureSubscription: 'ServicePrincipalConnectionCedric'
         KeyVaultName: 'KeyVaultCed'
-        SecretsFilter: '*'
-        RunAsPreJob: false
+        SecretsFilter: 'PasswordAcrAdmin,AcrAdminUsername'
+        RunAsPreJob: true
+
+    - script: |
+        echo $(AcrAdminUsername)
+        echo $(PasswordAcrAdmin)
+      displayName: 'Display Key Vault secrets'  # Optionnel, pour vérifier que les secrets sont récupérés
 
     - task: Docker@2
       displayName: Build and push an image to container registry
@@ -40,3 +44,5 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           minesweeper
+        containerRegistryUsername: $(AcrAdminUsername)
+        containerRegistryPassword: $(PasswordAcrAdmin)
