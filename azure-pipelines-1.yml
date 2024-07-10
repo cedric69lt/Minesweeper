@@ -10,9 +10,10 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '3fa287e9-2b34-4222-9fff-660359aa1be6'
+  group: 'ACR-VARIABLES-GROUP'
+  dockerRegistryServiceConnection: '$(DOCKER-RSC)'
   imageRepository: 'cedricltminesweeper'
-  containerRegistry: 'containerregistrycedric.azurecr.io'
+  containerRegistry: '$(ACR-NAME)'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: 'v12'
 
