@@ -10,12 +10,11 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  group: 'ACR-VARIABLES-GROUP'
-  dockerRegistryServiceConnection: '$(DOCKER-RSC)'
+  dockerRegistryServiceConnection: '3fa287e9-2b34-4222-9fff-660359aa1be6'
   imageRepository: 'cedricltminesweeper'
-  containerRegistry: '$(ACR-NAME)'
+  containerRegistry: 'containerregistrycedric.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
-  tag: 'v12'
+  tag: 'v13'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
